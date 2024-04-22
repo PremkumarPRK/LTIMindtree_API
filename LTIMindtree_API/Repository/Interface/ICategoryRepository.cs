@@ -6,6 +6,6 @@ namespace LTIMindtree_API.Repository.Interface
     {
         Task<Category> Add(Category category);
         Task<IEnumerable<Category>> GetAll();
-        Task<Category> GetById(Category category);
+        Task<Category?> GetById(int id);
     }
 }

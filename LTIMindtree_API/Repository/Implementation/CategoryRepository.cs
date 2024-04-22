@@ -25,9 +25,10 @@ namespace LTIMindtree_API.Repository.Implementation
             return await dbContext.Categories.ToListAsync();
         }
 
-        public Task<Category> GetById(Category category)
+        public async Task<Category?> GetById(int id)
         {
-            throw new NotImplementedException();
+            var category = await dbContext.Categories.FirstOrDefaultAsync(x => x.CategoryId == id);
+            return category;
         }
     }
 }

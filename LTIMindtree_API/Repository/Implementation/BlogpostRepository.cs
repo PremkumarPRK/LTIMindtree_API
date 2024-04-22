@@ -22,13 +22,17 @@ namespace LTIMindtree_API.Repository.Implementation
 
         public async Task<IEnumerable<Blogpost>> GetAll()
         {
-            var blogposts = await dbContext.Blogposts.ToListAsync();
+            var blogposts = await dbContext.Blogposts.Include(x => x.Categories).ToListAsync();
             return blogposts;
         }
 
         public async Task<IEnumerable<Blogpost?>> GetMyAll(string username)
         {
-            var blogposts = await dbContext.Blogposts.Where(x => x.CreatedBy == username).ToListAsync();
+            var blogposts = await dbContext.Blogposts.Include(x => x.Categories).Where(x => x.CreatedBy == username).ToListAsync();
+            if (blogposts == null) 
+            {
+                return null;
+            }
             return blogposts;
         }
 
