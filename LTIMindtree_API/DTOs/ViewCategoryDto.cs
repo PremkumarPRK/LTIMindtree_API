@@ -1,13 +1,11 @@
-﻿namespace LTIMindtree_API.Models
+﻿namespace LTIMindtree_API.DTOs
 {
-    public class Category
+    public class ViewCategoryDto
     {
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public string UrlHnadle { get; set; }
         public string? CreatedBy { get; set; }
         public DateTime? CreatedOn { get; set; }
-
-        public ICollection<Blogpost> Blogposts { get; set; }
     }
 }

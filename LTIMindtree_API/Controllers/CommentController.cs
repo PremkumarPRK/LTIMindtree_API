@@ -1,4 +1,5 @@
-﻿using LTIMindtree_API.Models;
+﻿using LTIMindtree_API.DTOs;
+using LTIMindtree_API.Models;
 using LTIMindtree_API.Repository.Interface;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -20,17 +21,36 @@ namespace LTIMindtree_API.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Reader")]
-        public async Task<IActionResult> GetAllCommnets(int id)
+        [Route("{id:int}")]
+        public async Task<IActionResult> GetAllCommnets([FromRoute] int id)
         {
             var results = await commentRepository.GetAll(id);
-            return Ok(results);
+            var showresults = new List<ViewCommentDto>();
+            foreach (var item in results)
+            {
+                showresults.Add(new ViewCommentDto
+                {
+                    BlogpostId = item.BlogpostId,
+                    CommentText = item.CommentText,
+                    CreatedBy = item.CreatedBy,
+                    CreatedOn = item.CreatedOn,
+                });
+            }
+            return Ok(showresults);
         }
 
         [HttpPost]
         [Authorize(Roles = "Writer")]
-        public async Task<IActionResult> CreateComment(Comment comment)
+        public async Task<IActionResult> CreateComment(AddCommentDto comment)
         {
-            var result = await commentRepository.Add(comment);
+            var data = new Comment
+            {
+                BlogpostId = comment.BlogpostId,
+                CommentText = comment.CommentText,
+                CreatedBy = comment.CreatedBy,
+                CreatedOn = comment.CreatedOn,
+            };
+            var result = await commentRepository.Add(data);
             return Ok(result);
         }
     }
