@@ -1,6 +1,5 @@
-@LTIMindtree_API_HostAddress = http://localhost:5207
+@LTIMindtree_API_HostAddress = http://localhost:5207/api
 
-GET {{LTIMindtree_API_HostAddress}}/weatherforecast/
+GET {{LTIMindtree_API_HostAddress}}/Category/
 Accept: application/json
-
 ###
